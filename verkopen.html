@@ -61,7 +61,7 @@
         <li><a href="contact.html">Contact</a></li>
     </ul>
     <a href="gratis-schatting.html" class="nav-cta">Gratis Schatting</a>
-    <div class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></div>
+    <button type="button" class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
 </header>
 
 <!-- PAGE HEADER -->
@@ -72,7 +72,7 @@
         <span class="label-tag">Diensten</span>
         <h1>Uw Woning Verkopen</h1>
         <p>Professionele begeleiding voor een vlotte en succesvolle verkoop</p>
-        <nav class="breadcrumb"><a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> <a href="#">Diensten</a> <i class="fas fa-chevron-right"></i> <span>Verkopen</span></nav>
+        <nav class="breadcrumb"><a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> <span>Diensten</span> <i class="fas fa-chevron-right"></i> <span>Verkopen</span></nav>
     </div>
 </section>
 
@@ -178,9 +178,9 @@
 </footer>
 
 <script>
-document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('open'));
+const __navMenu=document.getElementById('navMenu');const __ham=document.getElementById('hamburger');if(__ham){__ham.addEventListener('click',()=>{const o=__navMenu.classList.toggle('open');document.body.classList.toggle('menu-open',o);});}document.addEventListener('keydown',e=>{if(e.key==='Escape'){__navMenu.classList.remove('open');document.body.classList.remove('menu-open');}});
 window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80));
-document.querySelectorAll('.nav-dropdown').forEach(dd => { dd.addEventListener('mouseenter', () => dd.classList.add('active')); dd.addEventListener('mouseleave', () => dd.classList.remove('active')); });
+const __isMobile=()=>window.innerWidth<=768;document.querySelectorAll('.nav-dropdown').forEach(dd=>{const lk=dd.querySelector('a');dd.addEventListener('mouseenter',()=>{if(!__isMobile())dd.classList.add('active');});dd.addEventListener('mouseleave',()=>{if(!__isMobile())dd.classList.remove('active');});lk.addEventListener('click',e=>{if(__isMobile()){e.preventDefault();document.querySelectorAll('.nav-dropdown.active').forEach(o=>{if(o!==dd)o.classList.remove('active');});dd.classList.toggle('active');}});});
 const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
 document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[class*="-img"],[class*="-image"]').forEach(el => observer.observe(el));
 </script>

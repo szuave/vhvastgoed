@@ -127,7 +127,7 @@
         <li><a href="contact.html">Contact</a></li>
     </ul>
     <a href="gratis-schatting.html" class="nav-cta">Gratis Schatting</a>
-    <div class="hamburger" onclick="document.getElementById('navMenu').classList.toggle('open')" aria-label="Menu"><i class="fas fa-bars"></i></div>
+    <button type="button" class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
 </header>
 
 <!-- HERO -->
@@ -140,7 +140,7 @@
     <div class="hero-overlay">
         <div class="hero-content">
             <p class="hero-sub">Makelaar voor de regio Meetjesland</p>
-            <h1>Eén adres voor verkoop,<br>verhuur en advies</h1>
+            <h1>Eén adres voor verkoop, <br>verhuur en advies</h1>
             <div class="hero-btns">
                 <a href="te-koop.html" class="btn-gold">Bekijk ons aanbod</a>
                 <a href="gratis-schatting.html" class="btn-outline-w">Gratis schatting</a>
@@ -297,15 +297,68 @@
 <script src="js/properties.js"></script>
 <script src="js/featured.js"></script>
 <script>
-document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});document.getElementById('navMenu').classList.remove('open');});});
+const navMenu = document.getElementById('navMenu');
+const hamburger = document.getElementById('hamburger') || document.querySelector('.hamburger');
+const isMobile = () => window.innerWidth <= 768;
+
+// Hamburger toggle with body scroll lock
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        const opened = navMenu.classList.toggle('open');
+        document.body.classList.toggle('menu-open', opened);
+    });
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const href=a.getAttribute('href');if(href.length<=1)return;e.preventDefault();const t=document.querySelector(href);if(t)t.scrollIntoView({behavior:'smooth'});navMenu.classList.remove('open');document.body.classList.remove('menu-open');});});
+
+// Hero slider
 let current=0;const slides=document.querySelectorAll('.slide');
 function goToSlide(n){slides[current].classList.remove('active');current=n;slides[current].classList.add('active');}
 function changeSlide(d){goToSlide((current+d+slides.length)%slides.length);}
 setInterval(()=>changeSlide(1),5000);
+
+// Navbar scroll
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>80));
-const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.15});
-document.querySelectorAll('.dienst-card,.property-card,.over-img,.over-tekst,.aankoop-tekst,.aankoop-img,.contact-card').forEach(el=>observer.observe(el));
-document.querySelectorAll('.nav-dropdown').forEach(dd=>{dd.addEventListener('mouseenter',()=>dd.classList.add('active'));dd.addEventListener('mouseleave',()=>dd.classList.remove('active'));});
+
+// Scroll animations (only for elements with .fade class, default visible)
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});},{threshold:0.1});
+document.querySelectorAll('.property-card,.over-img,.over-tekst,.aankoop-tekst,.aankoop-img,.contact-card').forEach(el=>observer.observe(el));
+
+// Dropdowns: hover on desktop, tap on mobile (force display via inline style on mobile)
+document.querySelectorAll('.nav-dropdown').forEach(dd=>{
+    const link = dd.querySelector('a');
+    const submenu = dd.querySelector('.dropdown-menu');
+    dd.addEventListener('mouseenter',()=>{ if(!isMobile()) dd.classList.add('active'); });
+    dd.addEventListener('mouseleave',()=>{ if(!isMobile()) dd.classList.remove('active'); });
+    link.addEventListener('click',e=>{
+        if(isMobile()){
+            e.preventDefault();
+            // Close other open dropdowns
+            document.querySelectorAll('.nav-dropdown.active').forEach(other=>{
+                if(other!==dd){
+                    other.classList.remove('active');
+                    const otherSub = other.querySelector('.dropdown-menu');
+                    if(otherSub) otherSub.style.display = 'none';
+                }
+            });
+            const isOpen = dd.classList.toggle('active');
+            // Force display via inline style (overrides any cached CSS)
+            if(submenu) submenu.style.display = isOpen ? 'block' : 'none';
+        }
+    });
+});
+
+// Reset inline styles on resize back to desktop
+window.addEventListener('resize',()=>{
+    if(!isMobile()){
+        document.querySelectorAll('.dropdown-menu').forEach(sm=>{ sm.style.display = ''; });
+        document.querySelectorAll('.nav-dropdown').forEach(dd=>dd.classList.remove('active'));
+    }
+});
+
+// Close menu when clicking outside or pressing escape
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ navMenu.classList.remove('open'); document.body.classList.remove('menu-open'); }});
 </script>
 <script src="cookie-banner.js"></script>
 </body>
