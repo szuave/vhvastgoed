@@ -301,11 +301,23 @@ const navMenu = document.getElementById('navMenu');
 const hamburger = document.getElementById('hamburger') || document.querySelector('.hamburger');
 const isMobile = () => window.innerWidth <= 768;
 
-// Hamburger toggle with body scroll lock
+// Hamburger toggle with body scroll lock + dynamic menu positioning
 if (hamburger) {
     hamburger.addEventListener('click', () => {
         const opened = navMenu.classList.toggle('open');
         document.body.classList.toggle('menu-open', opened);
+        // Dynamically position menu just below navbar
+        if (opened) {
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                const bottom = navbar.getBoundingClientRect().bottom;
+                navMenu.style.top = bottom + 'px';
+                navMenu.style.height = `calc(100vh - ${bottom}px)`;
+            }
+        } else {
+            navMenu.style.top = '';
+            navMenu.style.height = '';
+        }
     });
 }
 

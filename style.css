@@ -545,8 +545,9 @@ footer { background:var(--darker); color:rgba(255,255,255,0.5); }
 ============================================================ */
 @media(max-width:768px) {
 
-    /* === BODY SCROLL LOCK === */
+    /* === BODY SCROLL LOCK + Hide topbar when menu open === */
     body.menu-open { overflow:hidden; height:100vh; }
+    body.menu-open .topbar { display:none !important; }
 
     /* === TOPBAR === */
     .topbar { padding:8px 5%; font-size:0.72rem; }
