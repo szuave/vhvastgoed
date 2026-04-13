@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Vastgoed — Volgorde Beheren</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+
+    <!-- Top bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <img src="../assets/logo_transparent.png" alt="VH Vastgoed" class="topbar-logo">
+            <h1 class="topbar-title">Volgorde Beheren</h1>
+        </div>
+        <div class="topbar-right">
+            <span class="topbar-user" id="userEmail"></span>
+            <button class="btn btn-secondary btn-sm" id="logoutBtn">Uitloggen</button>
+        </div>
+    </header>
+
+    <nav class="admin-nav">
+        <a href="dashboard.html" class="admin-nav-link">
+            <i class="fas fa-th-large"></i> Overzicht
+        </a>
+        <a href="property-form.html" class="admin-nav-link">
+            <i class="fas fa-plus"></i> Nieuw Pand
+        </a>
+        <a href="sort-order.html" class="admin-nav-link active">
+            <i class="fas fa-sort"></i> Volgorde
+        </a>
+        <a href="team.html" class="admin-nav-link">
+            <i class="fas fa-users"></i> Team
+        </a>
+        <a href="profile.html" class="admin-nav-link">
+            <i class="fas fa-user"></i> Profiel
+        </a>
+        <a href="settings.html" class="admin-nav-link">
+            <i class="fas fa-cog"></i> Instellingen
+        </a>
+    </nav>
+
+    <main class="dashboard-main">
+        <div class="sort-tabs">
+            <button class="sort-tab active" data-status="te koop">Te Koop</button>
+            <button class="sort-tab" data-status="te huur">Te Huur</button>
+            <button class="sort-tab" data-status="featured">Homepage (Aanbevolen)</button>
+        </div>
+
+        <div id="sortList" class="sort-list">
+            <div class="sort-empty">Panden worden geladen...</div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" id="saveOrderBtn">
+                <i class="fas fa-save"></i> Opslaan
+            </button>
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" style="display:none;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/sort-order.js"></script>
+</body>
+</html>

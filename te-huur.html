@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Te Huur — Huurwoningen & Appartementen | VH Vastgoed Meetjesland</title>
+    <meta name="description" content="Bekijk ons aanbod huurwoningen en appartementen te huur in het Meetjesland. Lembeke, Eeklo, Maldegem en omstreken. VH Vastgoed - uw erkend makelaar.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.vh-vastgoed.be/te-huur.html">
+    <link rel="alternate" hreflang="nl-BE" href="https://www.vh-vastgoed.be/te-huur.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.vh-vastgoed.be/te-huur.html">
+    <meta property="og:title" content="Woningen Te Huur — VH Vastgoed Meetjesland">
+    <meta property="og:description" content="Ontdek ons aanbod huurwoningen in het Meetjesland.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.vh-vastgoed.be/te-huur.html">
+    <meta property="og:image" content="https://www.vh-vastgoed.be/assets/og-image.jpg">
+    <meta property="og:locale" content="nl_BE">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="topbar-left">
+        <span><i class="fas fa-phone"></i> <a href="tel:+32475734069">0475/73.40.69</a></span>
+        <span><i class="fas fa-envelope"></i> <a href="mailto:nico@vh-vastgoed.be">nico@vh-vastgoed.be</a></span>
+    </div>
+    <div class="topbar-right">
+        <div class="topbar-social">
+            <a href="https://www.facebook.com/profile.php?id=61577507692680" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/vhvastgoed/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/nico-van-hulle-3ab778b5/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+    <a href="index.html" class="logo"><img src="assets/logo_transparent.png" alt="VH Vastgoed" loading="lazy"></a>
+    <ul class="nav-links" id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav-dropdown">
+            <a href="#" class="active">Vastgoed <i class="fas fa-chevron-down nav-arrow"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="te-koop.html">Te Koop</a></li>
+                <li><a href="te-huur.html" class="active">Te Huur</a></li>
+            </ul>
+        </li>
+        <li class="nav-dropdown">
+            <a href="#">Diensten <i class="fas fa-chevron-down nav-arrow"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="verkopen.html">Woning Verkopen</a></li>
+                <li><a href="verhuren.html">Woning Verhuren</a></li>
+                <li><a href="aankoop.html">Aankoopbegeleiding</a></li>
+            </ul>
+        </li>
+        <li><a href="over-ons.html">Over Ons</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="gratis-schatting.html" class="nav-cta">Gratis Schatting</a>
+    <div class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></div>
+</header>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+    <div class="page-header-bg" style="background-image:url('assets/pand-lievegem.jpg')"></div>
+    <div class="page-header-overlay"></div>
+    <div class="page-header-content">
+        <span class="label-tag">Huurwoningen</span>
+        <h1>Woningen Te Huur</h1>
+        <p>Ontdek ons aanbod aan huurwoningen en appartementen in het Meetjesland</p>
+        <nav class="breadcrumb"><a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> <span>Te Huur</span></nav>
+    </div>
+</section>
+
+<!-- FILTER BAR -->
+<section class="filter-bar">
+    <div class="filter-inner">
+        <div class="filter-group"><label>Type</label><select id="filter-type"><option value="">Alle types</option><option value="woning">Woning</option><option value="appartement">Appartement</option><option value="studio">Studio</option></select></div>
+        <div class="filter-group"><label>Regio</label><select id="filter-city"><option value="">Alle regio's</option></select></div>
+        <div class="filter-group"><label>Huurprijs</label><select id="filter-price"><option value="">Alle prijzen</option><option value="0-750">Tot &euro; 750/mnd</option><option value="750-1000">&euro; 750 - &euro; 1.000/mnd</option><option value="1000-1500">&euro; 1.000 - &euro; 1.500/mnd</option><option value="1500-">&euro; 1.500+/mnd</option></select></div>
+        <div class="filter-group"><label>Slaapkamers</label><select id="filter-bedrooms"><option value="">Alle</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option></select></div>
+        <button class="btn-gold filter-btn"><i class="fas fa-search"></i> Zoeken</button>
+    </div>
+</section>
+
+<!-- PROPERTIES GRID -->
+<section class="properties-section">
+    <div class="properties-count"><p><strong id="property-count">0</strong> huurwoningen gevonden</p></div>
+    <div class="properties-grid" id="properties-grid">
+        <p style="text-align:center;color:#555;grid-column:1/-1;padding:40px 0;">Panden laden...</p>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="page-cta">
+    <h2>Op zoek naar een specifieke huurwoning?</h2>
+    <p>Laat ons weten wat u zoekt en wij brengen u als eerste op de hoogte van nieuwe huurpanden.</p>
+    <a href="contact.html" class="btn-gold"><i class="fas fa-envelope"></i> Zoekopdracht instellen</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-main">
+        <div class="footer-col footer-brand">
+            <img src="assets/logo_transparent.png" alt="VH Vastgoed" class="footer-logo" loading="lazy">
+            <p>Professionele en op maat gerichte aanpak, waarbij de klant altijd centraal staat.</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61577507692680" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/vhvastgoed/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/nico-van-hulle-3ab778b5/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="footer-col"><h4>Vastgoed</h4><a href="te-koop.html">Te Koop</a><a href="te-huur.html">Te Huur</a></div>
+        <div class="footer-col"><h4>Diensten</h4><a href="verkopen.html">Woning Verkopen</a><a href="verhuren.html">Woning Verhuren</a><a href="aankoop.html">Aankoopbegeleiding</a><a href="gratis-schatting.html">Gratis Schatting</a></div>
+        <div class="footer-col"><h4>Contact</h4><p>Antwerpse Heirweg 44</p><p>9971 Lembeke</p><a href="tel:+32475734069">0475/73.40.69</a><a href="mailto:nico@vh-vastgoed.be">nico@vh-vastgoed.be</a></div>
+    </div>
+    <div class="footer-legal">
+        <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
+        <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
+    </div>
+    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden.</div>
+</footer>
+
+<script>
+document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('open'));
+window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80));
+document.querySelectorAll('.nav-dropdown').forEach(dd => { dd.addEventListener('mouseenter', () => dd.classList.add('active')); dd.addEventListener('mouseleave', () => dd.classList.remove('active')); });
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
+document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[class*="-img"],[class*="-image"]').forEach(el => observer.observe(el));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/properties.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => initPropertyPage('te huur'));</script>
+<script src="cookie-banner.js"></script>
+</body>
+</html>

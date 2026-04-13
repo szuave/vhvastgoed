@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pand Details — VH Vastgoed</title>
+    <meta name="description" content="Bekijk de volledige details van dit pand bij VH Vastgoed. Erkend vastgoedmakelaar in het Meetjesland.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.vh-vastgoed.be/property.html">
+    <link rel="alternate" hreflang="nl-BE" href="https://www.vh-vastgoed.be/property.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.vh-vastgoed.be/property.html">
+    <meta property="og:title" content="Pand Details — VH Vastgoed">
+    <meta property="og:description" content="Bekijk de volledige details van dit pand bij VH Vastgoed.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.vh-vastgoed.be/property.html">
+    <meta property="og:image" content="https://www.vh-vastgoed.be/assets/og-image.jpg">
+    <meta property="og:locale" content="nl_BE">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <div class="topbar-left">
+        <span><i class="fas fa-phone"></i> <a href="tel:+32475734069">0475/73.40.69</a></span>
+        <span><i class="fas fa-envelope"></i> <a href="mailto:nico@vh-vastgoed.be">nico@vh-vastgoed.be</a></span>
+    </div>
+    <div class="topbar-right">
+        <div class="topbar-social">
+            <a href="https://www.facebook.com/profile.php?id=61577507692680" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/vhvastgoed/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/nico-van-hulle-3ab778b5/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+    <a href="index.html" class="logo"><img src="assets/logo_transparent.png" alt="VH Vastgoed" loading="lazy"></a>
+    <ul class="nav-links" id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li class="nav-dropdown">
+            <a href="#">Vastgoed <i class="fas fa-chevron-down nav-arrow"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="te-koop.html">Te Koop</a></li>
+                <li><a href="te-huur.html">Te Huur</a></li>
+            </ul>
+        </li>
+        <li class="nav-dropdown">
+            <a href="#">Diensten <i class="fas fa-chevron-down nav-arrow"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="verkopen.html">Woning Verkopen</a></li>
+                <li><a href="verhuren.html">Woning Verhuren</a></li>
+                <li><a href="aankoop.html">Aankoopbegeleiding</a></li>
+            </ul>
+        </li>
+        <li><a href="over-ons.html">Over Ons</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="gratis-schatting.html" class="nav-cta">Gratis Schatting</a>
+    <div class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></div>
+</header>
+
+<!-- PROPERTY DETAIL -->
+<main class="property-detail">
+
+    <!-- Loading state -->
+    <div class="loading-state" id="loading-state">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Pand wordt geladen...</p>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="empty-state" style="display:none;">
+        <i class="fas fa-house-chimney-crack"></i>
+        <h2>Pand niet gevonden</h2>
+        <p>Dit pand bestaat niet of is niet meer beschikbaar.</p>
+        <a href="te-koop.html" class="btn-gold">Bekijk ons aanbod</a>
+    </div>
+
+    <!-- Property content (hidden until loaded) -->
+    <div class="property-content" id="property-content" style="display:none;">
+
+        <!-- GALLERY -->
+        <section class="detail-gallery" id="detail-gallery">
+            <div class="gallery-main" id="gallery-main">
+                <img src="" alt="Hoofdfoto" id="gallery-main-img">
+                <div class="gallery-arrows">
+                    <button id="gallery-prev" aria-label="Vorige foto"><i class="fas fa-chevron-left"></i></button>
+                    <button id="gallery-next" aria-label="Volgende foto"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="gallery-thumbs" id="gallery-thumbs"></div>
+        </section>
+
+        <!-- HEADER -->
+        <section class="detail-header" id="detail-header">
+            <div class="detail-header-left">
+                <span class="detail-type" id="detail-type"></span>
+                <h1 class="detail-address" id="detail-address"></h1>
+                <div class="detail-key-specs" id="detail-key-specs"></div>
+            </div>
+            <div class="detail-header-right">
+                <p class="detail-price" id="detail-price"></p>
+            </div>
+        </section>
+
+        <!-- ACTIONS -->
+        <div class="detail-actions" id="detail-actions">
+            <a href="#" class="action-link" id="action-map"><i class="fas fa-map-marker-alt"></i> Op de kaart bekijken</a>
+            <div class="action-share">
+                <span><i class="fas fa-share-alt"></i> Delen</span>
+                <a href="#" class="share-icon" id="share-facebook" target="_blank" aria-label="Delen op Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="share-icon" id="share-twitter" target="_blank" aria-label="Delen op X"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="share-icon" id="share-whatsapp" target="_blank" aria-label="Delen via WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="share-icon" id="share-email" aria-label="Delen via e-mail"><i class="fas fa-envelope"></i></a>
+            </div>
+            <button class="action-link" onclick="window.print()"><i class="fas fa-print"></i> Afdrukken</button>
+        </div>
+
+        <!-- BODY: TWO COLUMNS -->
+        <div class="detail-body">
+
+            <!-- LEFT COLUMN -->
+            <div class="detail-main">
+
+                <!-- OMSCHRIJVING -->
+                <div class="detail-section" id="detail-description">
+                    <div class="detail-section-header">
+                        <h2>Omschrijving</h2>
+                        <span class="detail-ref" id="detail-ref"></span>
+                    </div>
+                    <div class="detail-description-text" id="detail-description-text"></div>
+                </div>
+
+                <!-- DETAILS VAN HET PAND -->
+                <div class="detail-section" id="detail-specs">
+                    <h2>Details van het pand</h2>
+                    <div class="specs-grid" id="specs-grid"></div>
+                </div>
+
+                <!-- DOWNLOADS -->
+                <div class="detail-section" id="detail-documents" style="display:none;">
+                    <h2>Downloads</h2>
+                    <div class="downloads-list" id="downloads-list"></div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="detail-sidebar">
+                <div class="contact-card-detail" id="detail-contact">
+                    <h3>Uw Contact</h3>
+                    <div class="agent-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <p class="agent-name">Nico Van Hulle</p>
+                    <p class="agent-phone"><i class="fas fa-phone"></i> <a href="tel:+32475734069">0475/73.40.69</a></p>
+                    <p class="agent-email"><i class="fas fa-envelope"></i> <a href="mailto:nico@vh-vastgoed.be">nico@vh-vastgoed.be</a></p>
+                    <a href="contact.html" class="btn-contact">Contact</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PHOTO STRIP -->
+        <div class="photo-strip-section" id="photo-strip-section" style="display:none;">
+            <div class="photo-strip-wrapper">
+                <div class="photo-strip" id="photo-strip"></div>
+            </div>
+        </div>
+
+        <!-- BACK LINK -->
+        <div class="back-link" id="back-link">
+            <a href="te-koop.html"><i class="fas fa-arrow-left"></i> Terug naar overzicht</a>
+        </div>
+
+    </div>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" style="display:none;">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Sluiten"><i class="fas fa-times"></i></button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Vorige"><i class="fas fa-chevron-left"></i></button>
+    <img src="" alt="Foto" id="lightbox-img">
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Volgende"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-main">
+        <div class="footer-col footer-brand">
+            <img src="assets/logo_transparent.png" alt="VH Vastgoed" class="footer-logo" loading="lazy">
+            <p>Professionele en op maat gerichte aanpak, waarbij de klant altijd centraal staat.</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61577507692680" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/vhvastgoed/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/nico-van-hulle-3ab778b5/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+        <div class="footer-col"><h4>Vastgoed</h4><a href="te-koop.html">Te Koop</a><a href="te-huur.html">Te Huur</a></div>
+        <div class="footer-col"><h4>Diensten</h4><a href="verkopen.html">Woning Verkopen</a><a href="verhuren.html">Woning Verhuren</a><a href="aankoop.html">Aankoopbegeleiding</a><a href="gratis-schatting.html">Gratis Schatting</a></div>
+        <div class="footer-col"><h4>Contact</h4><p>Antwerpse Heirweg 44</p><p>9971 Lembeke</p><a href="tel:+32475734069">0475/73.40.69</a><a href="mailto:nico@vh-vastgoed.be">nico@vh-vastgoed.be</a></div>
+    </div>
+    <div class="footer-legal">
+        <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
+        <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
+    </div>
+    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden.</div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+document.getElementById('hamburger').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('open'));
+window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80));
+document.querySelectorAll('.nav-dropdown').forEach(dd => { dd.addEventListener('mouseenter', () => dd.classList.add('active')); dd.addEventListener('mouseleave', () => dd.classList.remove('active')); });
+const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
+document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[class*="-img"],[class*="-image"]').forEach(el => observer.observe(el));
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/property-detail.js"></script>
+<script src="cookie-banner.js"></script>
+</body>
+</html>

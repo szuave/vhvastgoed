@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Vastgoed — Instellingen</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+
+    <!-- Top bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <img src="../assets/logo_transparent.png" alt="VH Vastgoed" class="topbar-logo">
+            <h1 class="topbar-title">Instellingen</h1>
+        </div>
+        <div class="topbar-right">
+            <span class="topbar-user" id="userEmail"></span>
+            <button class="btn btn-secondary btn-sm" id="logoutBtn">Uitloggen</button>
+        </div>
+    </header>
+
+    <nav class="admin-nav">
+        <a href="dashboard.html" class="admin-nav-link">
+            <i class="fas fa-th-large"></i> Overzicht
+        </a>
+        <a href="property-form.html" class="admin-nav-link">
+            <i class="fas fa-plus"></i> Nieuw Pand
+        </a>
+        <a href="sort-order.html" class="admin-nav-link">
+            <i class="fas fa-sort"></i> Volgorde
+        </a>
+        <a href="team.html" class="admin-nav-link">
+            <i class="fas fa-users"></i> Team
+        </a>
+        <a href="profile.html" class="admin-nav-link">
+            <i class="fas fa-user"></i> Profiel
+        </a>
+        <a href="settings.html" class="admin-nav-link active">
+            <i class="fas fa-cog"></i> Instellingen
+        </a>
+    </nav>
+
+    <main class="dashboard-main">
+        <div class="settings-container">
+
+            <!-- Kantoor adres section -->
+            <section class="form-section open">
+                <h2 class="section-header">
+                    <span><i class="fas fa-map-marker-alt"></i> Kantoor adres</span>
+                </h2>
+                <div class="section-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="office_street">Straat</label>
+                            <input type="text" id="office_street" placeholder="bv. Antwerpse Heirweg">
+                        </div>
+                        <div class="form-group">
+                            <label for="office_number">Huisnummer</label>
+                            <input type="text" id="office_number" placeholder="bv. 44">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="office_postal">Postcode</label>
+                            <input type="text" id="office_postal" placeholder="bv. 9971">
+                        </div>
+                        <div class="form-group">
+                            <label for="office_city">Gemeente</label>
+                            <input type="text" id="office_city" placeholder="bv. Lembeke">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary" id="previewMapBtn">
+                                <i class="fas fa-search-location"></i> Zoek op kaart
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Map preview -->
+                    <div class="map-preview-container" id="settingsMapContainer" style="display:none;">
+                        <iframe id="settingsMapPreview" class="map-preview-iframe" src="" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Kantoor locatie preview"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Save button -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary" id="saveSettingsBtn">
+                    <i class="fas fa-save"></i> Opslaan
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" style="display:none;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

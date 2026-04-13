@@ -1,0 +1,36 @@
+# Editor & IDE
+.claude/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / build
+node_modules/
+dist/
+build/
+.cache/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Local server config
+serve.json
+.netlify/
+
+# Temp files
+*.tmp
+*.bak
+*.orig

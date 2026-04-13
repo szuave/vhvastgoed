@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Vastgoed — Admin Login</title>
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="login-page">
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="../assets/logo_transparent.png" alt="VH Vastgoed">
+            </div>
+            <h1 class="login-title">Admin Login</h1>
+
+            <form id="loginForm" autocomplete="on">
+                <div class="form-group">
+                    <label for="email">E-mailadres</label>
+                    <input type="email" id="email" name="email" placeholder="nico@vh-vastgoed.be" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Wachtwoord</label>
+                    <input type="password" id="password" name="password" placeholder="Wachtwoord" required autocomplete="current-password">
+                </div>
+
+                <div id="loginError" class="error-message" style="display:none;"></div>
+
+                <button type="submit" class="btn btn-primary btn-block">Inloggen</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // If already logged in, redirect to dashboard
+            const { data } = await db.auth.getSession();
+            const session = data?.session;
+            if (session) {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const errorEl = document.getElementById('loginError');
+                errorEl.style.display = 'none';
+
+                const btn = e.target.querySelector('button[type="submit"]');
+                btn.disabled = true;
+                btn.textContent = 'Bezig met inloggen...';
+
+                const error = await window.Auth.login(email, password);
+                if (error) {
+                    errorEl.textContent = error;
+                    errorEl.style.display = 'block';
+                    btn.disabled = false;
+                    btn.textContent = 'Inloggen';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
