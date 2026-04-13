@@ -165,6 +165,8 @@ footer { background:var(--darker); color:rgba(255,255,255,0.5); }
 .footer-legal p { font-size:0.68rem; color:rgba(255,255,255,0.3); line-height:1.8; text-align:center; }
 .footer-bottom { border-top:1px solid rgba(255,255,255,0.06); text-align:center; padding:20px 5%; font-size:0.75rem; }
 .footer-bottom span { color:var(--gold); }
+.footer-bottom a, .footer-bottom a:visited, .footer-bottom a:active { color:var(--gold); text-decoration:none; transition:opacity 0.3s; }
+.footer-bottom a:hover { opacity:0.75; color:var(--gold); }
 .footer-legal-links { margin-top:8px; }
 .footer-legal-links a { color:rgba(255,255,255,0.4); text-decoration:none; font-size:0.72rem; transition:color 0.3s; }
 .footer-legal-links a:hover { color:var(--gold); }
