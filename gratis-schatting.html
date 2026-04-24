@@ -65,13 +65,10 @@
 </header>
 
 <!-- PAGE HEADER -->
-<section class="page-header">
-    <div class="page-header-bg" style="background-image:url('assets/drone-bouwgrond.jpg')"></div>
-    <div class="page-header-overlay"></div>
+<section class="page-header page-header-solid-dark">
     <div class="page-header-content">
         <span class="label-tag">Gratis &amp; Vrijblijvend</span>
         <h1>Gratis Waardebepaling</h1>
-        <p>Ontdek de waarde van uw woning — geheel kosteloos en zonder verplichtingen</p>
         <nav class="breadcrumb"><a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> <span>Gratis Schatting</span></nav>
     </div>
 </section>
@@ -133,7 +130,7 @@
         <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
         <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
     </div>
-    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
+    <div class="footer-bottom">&copy; <span class="copyright-year">2026</span> <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
 </footer>
 
 <script>
@@ -143,6 +140,7 @@ const __isMobile=()=>window.innerWidth<=768;document.querySelectorAll('.nav-drop
 const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
 document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[class*="-img"],[class*="-image"]').forEach(el => observer.observe(el));
 </script>
+<script>document.querySelectorAll('.copyright-year').forEach(el=>el.textContent=new Date().getFullYear());</script>
 <script src="cookie-banner.js"></script>
 </body>
 </html>

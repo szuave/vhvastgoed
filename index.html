@@ -288,7 +288,7 @@
         <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
         <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
     </div>
-    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
+    <div class="footer-bottom">&copy; <span class="copyright-year">2026</span> <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
 </footer>
 
 
@@ -372,6 +372,7 @@ window.addEventListener('resize',()=>{
 // Close menu when clicking outside or pressing escape
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ navMenu.classList.remove('open'); document.body.classList.remove('menu-open'); }});
 </script>
+<script>document.querySelectorAll('.copyright-year').forEach(el=>el.textContent=new Date().getFullYear());</script>
 <script src="cookie-banner.js"></script>
 </body>
 </html>

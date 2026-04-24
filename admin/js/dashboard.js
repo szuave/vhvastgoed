@@ -197,25 +197,14 @@
 
     async function deleteProperty(id) {
         try {
-            // First, get all media for this property to delete from storage
+            // 1. Collect storage paths first (before deleting the property)
             const { data: media } = await db
                 .from('property_media')
                 .select('storage_path')
                 .eq('property_id', id);
+            const paths = (media ?? []).map((m) => m.storage_path);
 
-            // Delete files from storage
-            if (media && media.length > 0) {
-                const paths = media.map((m) => m.storage_path);
-                const { error: storageError } = await db.storage
-                    .from('property-media')
-                    .remove(paths);
-
-                if (storageError) {
-                    console.error('Storage delete error:', storageError);
-                }
-            }
-
-            // Delete the property (cascades to property_media rows)
+            // 2. Delete the property row (cascade removes property_media rows via FK)
             const { error } = await db
                 .from('properties')
                 .delete()
@@ -225,6 +214,17 @@
                 console.error('Delete property error:', error);
                 showToast('Fout bij het verwijderen van het pand.', 'error');
                 return;
+            }
+
+            // 3. Now remove the orphaned storage files. If this fails, the property
+            //    is already gone from the DB — worst case a few orphan files.
+            if (paths.length > 0) {
+                const { error: storageError } = await db.storage
+                    .from('property-media')
+                    .remove(paths);
+                if (storageError) {
+                    console.error('Storage cleanup error:', storageError);
+                }
             }
 
             showToast('Pand succesvol verwijderd.', 'success');

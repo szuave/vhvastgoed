@@ -65,13 +65,10 @@
 </header>
 
 <!-- PAGE HEADER -->
-<section class="page-header">
-    <div class="page-header-bg" style="background-image:url('assets/interieur-3.jpg')"></div>
-    <div class="page-header-overlay"></div>
+<section class="page-header page-header-solid-dark">
     <div class="page-header-content">
         <span class="label-tag">Bereik Ons</span>
         <h1>Contact</h1>
-        <p>Wij staan klaar om u te helpen met al uw vastgoedvragen</p>
         <nav class="breadcrumb"><a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> <span>Contact</span></nav>
     </div>
 </section>
@@ -143,7 +140,7 @@
         <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
         <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
     </div>
-    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
+    <div class="footer-bottom">&copy; <span class="copyright-year">2026</span> <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
 </footer>
 
 <script>
@@ -153,6 +150,7 @@ const __isMobile=()=>window.innerWidth<=768;document.querySelectorAll('.nav-drop
 const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
 document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[class*="-img"],[class*="-image"]').forEach(el => observer.observe(el));
 </script>
+<script>document.querySelectorAll('.copyright-year').forEach(el=>el.textContent=new Date().getFullYear());</script>
 <script src="cookie-banner.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
@@ -165,7 +163,7 @@ document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[c
         data.forEach(r => s[r.key] = r.value);
         if (s.office_street && s.office_city) {
             const addr = encodeURIComponent(`${s.office_street} ${s.office_number || ''}, ${s.office_postal || ''} ${s.office_city}, Belgium`);
-            const iframe = document.querySelector('.map-section iframe');
+            const iframe = document.querySelector('.contact-map-col iframe');
             if (iframe) iframe.src = `https://maps.google.com/maps?q=${addr}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
         }
     } catch(e) { console.error('Map load error:', e); }

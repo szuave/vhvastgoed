@@ -49,6 +49,12 @@
     <main class="dashboard-main">
         <form id="propertyForm" novalidate>
 
+            <!-- Grond-specific notice -->
+            <div id="grondNotice" class="grond-notice" style="display:none;">
+                <i class="fas fa-info-circle"></i>
+                <span>Voor <strong>Grond</strong> worden niet-relevante velden (slaapkamers, energie, kenmerken) automatisch verborgen. Alleen <strong>basis info</strong>, <strong>totale oppervlakte</strong>, <strong>juridisch</strong> en <strong>media</strong> worden getoond.</span>
+            </div>
+
             <!-- 1. Basis informatie -->
             <section class="form-section open">
                 <h2 class="section-header" data-toggle="section">
@@ -140,6 +146,12 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group full">
+                            <label for="virtual_tour_url">Virtueel bezoek (link)</label>
+                            <input type="url" id="virtual_tour_url" name="virtual_tour_url" placeholder="https://... (Matterport, YouTube, eigen video...)">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group full">
                             <label for="description">Beschrijving</label>
                             <textarea id="description" name="description" rows="6" placeholder="Uitgebreide beschrijving van het pand..."></textarea>
                         </div>
@@ -154,7 +166,7 @@
                     <span class="toggle-icon">&#9660;</span>
                 </h2>
                 <div class="section-body">
-                    <div class="form-row">
+                    <div class="form-row" data-hide-for-grond>
                         <div class="form-group">
                             <label for="bedrooms">Slaapkamers</label>
                             <input type="number" id="bedrooms" name="bedrooms" min="0">
@@ -165,7 +177,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group" data-hide-for-grond>
                             <label for="living_area">Bewoonbare opp. (m&sup2;)</label>
                             <input type="number" id="living_area" name="living_area" min="0" step="0.01">
                         </div>
@@ -174,7 +186,7 @@
                             <input type="number" id="total_area" name="total_area" min="0" step="0.01">
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" data-hide-for-grond>
                         <div class="form-group">
                             <label for="floors">Verdiepingen</label>
                             <input type="number" id="floors" name="floors" min="0">
@@ -185,7 +197,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group" data-hide-for-grond>
                             <label for="condition">Staat</label>
                             <select id="condition" name="condition">
                                 <option value="">— Selecteer —</option>
@@ -205,7 +217,7 @@
             </section>
 
             <!-- 3. Kenmerken -->
-            <section class="form-section">
+            <section class="form-section" data-hide-for-grond>
                 <h2 class="section-header" data-toggle="section">
                     <span>3. Kenmerken</span>
                     <span class="toggle-icon">&#9654;</span>
@@ -262,7 +274,7 @@
             </section>
 
             <!-- 4. Energie -->
-            <section class="form-section">
+            <section class="form-section" data-hide-for-grond>
                 <h2 class="section-header" data-toggle="section">
                     <span>4. Energie</span>
                     <span class="toggle-icon">&#9654;</span>

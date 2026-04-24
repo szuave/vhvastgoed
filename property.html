@@ -15,6 +15,10 @@
     <meta property="og:url" content="https://www.vh-vastgoed.be/property.html">
     <meta property="og:image" content="https://www.vh-vastgoed.be/assets/og-image.jpg">
     <meta property="og:locale" content="nl_BE">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pand Details — VH Vastgoed">
+    <meta name="twitter:description" content="Bekijk de volledige details van dit pand bij VH Vastgoed.">
+    <meta name="twitter:image" content="https://www.vh-vastgoed.be/assets/og-image.jpg">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -209,7 +213,7 @@
         <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
         <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
     </div>
-    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
+    <div class="footer-bottom">&copy; <span class="copyright-year">2026</span> <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
 </footer>
 
 <!-- SCRIPTS -->
@@ -223,6 +227,7 @@ document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[c
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
 <script src="js/property-detail.js"></script>
+<script>document.querySelectorAll('.copyright-year').forEach(el=>el.textContent=new Date().getFullYear());</script>
 <script src="cookie-banner.js"></script>
 </body>
 </html>

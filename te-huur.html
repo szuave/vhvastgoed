@@ -65,13 +65,10 @@
 </header>
 
 <!-- PAGE HEADER -->
-<section class="page-header">
-    <div class="page-header-bg" style="background-image:url('assets/pand-lievegem.jpg')"></div>
-    <div class="page-header-overlay"></div>
+<section class="page-header page-header-solid-dark">
     <div class="page-header-content">
         <span class="label-tag">Huurwoningen</span>
-        <h1>Woningen Te Huur</h1>
-        <p>Ontdek ons aanbod aan huurwoningen en appartementen in het Meetjesland</p>
+        <h1>Te Huur</h1>
         <nav class="breadcrumb"><a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> <span>Te Huur</span></nav>
     </div>
 </section>
@@ -79,7 +76,7 @@
 <!-- FILTER BAR -->
 <section class="filter-bar">
     <div class="filter-inner">
-        <div class="filter-group"><label>Type</label><select id="filter-type"><option value="">Alle types</option><option value="woning">Woning</option><option value="appartement">Appartement</option><option value="studio">Studio</option></select></div>
+        <div class="filter-group"><label>Type</label><select id="filter-type"><option value="">Alle types</option><option value="woning">Woning</option><option value="appartement">Appartement</option><option value="studio">Studio</option><option value="grond">Grond</option><option value="handelspand">Handelspand</option><option value="kantoor">Kantoor</option></select></div>
         <div class="filter-group"><label>Regio</label><select id="filter-city"><option value="">Alle regio's</option></select></div>
         <div class="filter-group"><label>Huurprijs</label><select id="filter-price"><option value="">Alle prijzen</option><option value="0-750">Tot &euro; 750/mnd</option><option value="750-1000">&euro; 750 - &euro; 1.000/mnd</option><option value="1000-1500">&euro; 1.000 - &euro; 1.500/mnd</option><option value="1500-">&euro; 1.500+/mnd</option></select></div>
         <div class="filter-group"><label>Slaapkamers</label><select id="filter-bedrooms"><option value="">Alle</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option></select></div>
@@ -122,7 +119,7 @@
         <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
         <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
     </div>
-    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
+    <div class="footer-bottom">&copy; <span class="copyright-year">2026</span> <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
 </footer>
 
 <script>
@@ -136,6 +133,7 @@ document.querySelectorAll('[class*="-card"],[class*="-item"],[class*="-text"],[c
 <script src="js/supabase-config.js"></script>
 <script src="js/properties.js"></script>
 <script>document.addEventListener('DOMContentLoaded', () => initPropertyPage('te huur'));</script>
+<script>document.querySelectorAll('.copyright-year').forEach(el=>el.textContent=new Date().getFullYear());</script>
 <script src="cookie-banner.js"></script>
 </body>
 </html>

@@ -36,6 +36,32 @@
         return null;
     }
 
+    function escapeAttr(str) {
+        if (str == null) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    function escapeHtml(str) {
+        if (str == null) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function virtualTourLink(url) {
+        if (!url) return null;
+        const safe = escapeAttr(url);
+        return { __safe: `<a href="${safe}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;">Virtueel bezoek <i class="fas fa-external-link-alt" style="font-size:0.75em;margin-left:4px;"></i></a>` };
+    }
+
     // ----------------------------------------------------------
     // Data fetching
     // ----------------------------------------------------------
@@ -187,10 +213,11 @@
             let thumbsHtml = '';
             photos.forEach((photo, idx) => {
                 const url = lightboxImages[idx];
+                const thumbAlt = escapeAttr(photo.label || photo.file_name || 'Foto ' + (idx + 1));
                 thumbsHtml += `<img
                     class="gallery-thumb ${idx === 0 ? 'active' : ''}"
-                    src="${url}"
-                    alt="${photo.label || photo.file_name || 'Foto ' + (idx + 1)}"
+                    src="${escapeAttr(url)}"
+                    alt="${thumbAlt}"
                     data-index="${idx}"
                     loading="lazy"
                 >`;
@@ -238,7 +265,7 @@
         const refEl = document.getElementById('detail-ref');
 
         if (textEl) {
-            textEl.innerHTML = (property.description ?? '').replace(/\n/g, '<br>');
+            textEl.innerHTML = escapeHtml(property.description ?? '').replace(/\n/g, '<br>');
         }
         if (refEl && property.reference_nr) {
             refEl.textContent = 'Ref: ' + property.reference_nr;
@@ -263,6 +290,7 @@
                 'Verdiepingen': property.floors,
                 'Totale oppervlakte': property.total_area != null ? `${property.total_area} m\u00B2` : null,
                 'Bewoonbare opp.': property.living_area != null ? `${property.living_area} m\u00B2` : null,
+                'Virtueel bezoek': virtualTourLink(property.virtual_tour_url),
             },
             'Indeling': {
                 'Slaapkamers': property.bedrooms,
@@ -322,7 +350,10 @@
                 <h3>${sectionTitle}</h3>
                 <table class="spec-table">`;
             for (const [label, value] of rows) {
-                html += `<tr><td>${label}</td><td>${value}</td></tr>`;
+                const cellHtml = (value && typeof value === 'object' && value.__safe)
+                    ? value.__safe
+                    : escapeHtml(String(value));
+                html += `<tr><td>${escapeHtml(label)}</td><td>${cellHtml}</td></tr>`;
             }
             html += '</table></div>';
         }
@@ -353,8 +384,8 @@
             const realIdx = idx % photos.length;
 
             html += `<div class="photo-strip-item" data-lightbox-idx="${realIdx}">
-                <img src="${url}" alt="${label}" loading="lazy">
-                ${label ? `<span class="photo-strip-label">${label}</span>` : ''}
+                <img src="${escapeAttr(url)}" alt="${escapeAttr(label)}" loading="lazy">
+                ${label ? `<span class="photo-strip-label">${escapeHtml(label)}</span>` : ''}
             </div>`;
         });
 
@@ -389,9 +420,10 @@
         for (const doc of docs) {
             const url = getPublicUrlDetail(doc.storage_path);
             const ext = (doc.file_name || '').split('.').pop().toUpperCase();
-            html += `<a href="${url}" target="_blank" rel="noopener" download class="download-item">
-                <span class="download-ext">${ext}</span>
-                <span class="download-name">${doc.label || doc.file_name || 'Document'}</span>
+            const displayName = doc.label || doc.file_name || 'Document';
+            html += `<a href="${escapeAttr(url)}" target="_blank" rel="noopener" download class="download-item">
+                <span class="download-ext">${escapeHtml(ext)}</span>
+                <span class="download-name">${escapeHtml(displayName)}</span>
                 <i class="fas fa-download"></i>
             </a>`;
         }
@@ -422,8 +454,11 @@
                     agentPhone = agent.phone || agentPhone;
                     agentEmail = agent.email || agentEmail;
 
-                    // Build tel: link from phone
-                    agentPhoneTel = '+32' + agentPhone.replace(/[\s\/\-\+]/g, '').replace(/^0/, '');
+                    // Build tel: link from phone — strip all separators, respect international prefix
+                    const digits = agentPhone.replace(/[\s\/\-\.\+\(\)]/g, '');
+                    agentPhoneTel = digits.startsWith('32') ? '+' + digits
+                                  : digits.startsWith('0')  ? '+32' + digits.slice(1)
+                                  : digits ? '+' + digits : '';
 
                     if (agent.photo_path) {
                         const { data: urlData } = db.storage
@@ -438,15 +473,15 @@
         }
 
         const photoHtml = agentPhotoUrl
-            ? `<img src="${agentPhotoUrl}" alt="${agentName}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+            ? `<img src="${escapeAttr(agentPhotoUrl)}" alt="${escapeAttr(agentName)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
             : '<i class="fas fa-user-tie"></i>';
 
         contactCard.innerHTML = `
             <h3>Uw Contact</h3>
             <div class="agent-photo">${photoHtml}</div>
-            <p class="agent-name">${agentName}</p>
-            <p class="agent-phone"><i class="fas fa-phone"></i> <a href="tel:${agentPhoneTel}">${agentPhone}</a></p>
-            <p class="agent-email"><i class="fas fa-envelope"></i> <a href="mailto:${agentEmail}">${agentEmail}</a></p>
+            <p class="agent-name">${escapeHtml(agentName)}</p>
+            <p class="agent-phone"><i class="fas fa-phone"></i> <a href="tel:${escapeAttr(agentPhoneTel)}">${escapeHtml(agentPhone)}</a></p>
+            <p class="agent-email"><i class="fas fa-envelope"></i> <a href="mailto:${escapeAttr(agentEmail)}">${escapeHtml(agentEmail)}</a></p>
             <a href="contact.html" class="btn-contact">Contact</a>
         `;
     }
@@ -461,7 +496,7 @@
         const em = document.getElementById('share-email');
 
         if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-        if (tw) tw.href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+        if (tw) tw.href = `https://x.com/intent/post?url=${pageUrl}&text=${pageTitle}`;
         if (wa) wa.href = `https://wa.me/?text=${pageTitle}%20${pageUrl}`;
         if (em) em.href = `mailto:?subject=${pageTitle}&body=${pageUrl}`;
 
@@ -549,6 +584,33 @@
     }
 
     // ----------------------------------------------------------
+    // Social share meta tags (og: / twitter:)
+    // ----------------------------------------------------------
+
+    function updateSocialMeta(property, displayTitle, primaryPhotoUrl) {
+        const setMeta = (selector, content) => {
+            if (!content) return;
+            const el = document.querySelector(selector);
+            if (el) el.setAttribute('content', content);
+        };
+
+        const title = `${displayTitle} — VH Vastgoed`;
+        const rawDesc = (property.description || '').replace(/\s+/g, ' ').trim();
+        const desc = rawDesc.length > 160 ? rawDesc.slice(0, 157) + '...' : rawDesc;
+        const image = primaryPhotoUrl || 'https://www.vh-vastgoed.be/assets/og-image.jpg';
+        const url = window.location.href;
+
+        setMeta('meta[property="og:title"]', title);
+        setMeta('meta[property="og:description"]', desc);
+        setMeta('meta[property="og:image"]', image);
+        setMeta('meta[property="og:url"]', url);
+        setMeta('meta[name="twitter:title"]', title);
+        setMeta('meta[name="twitter:description"]', desc);
+        setMeta('meta[name="twitter:image"]', image);
+        setMeta('meta[name="description"]', desc);
+    }
+
+    // ----------------------------------------------------------
     // State management
     // ----------------------------------------------------------
 
@@ -624,11 +686,15 @@
         await renderAgent(property);
 
         // SEO structured data
-        const photoUrls = (property.property_media ?? [])
-            .filter((m) => m.type === 'photo')
-            .map((m) => getPublicUrlDetail(m.storage_path))
-            .filter(Boolean);
+        const photos = (property.property_media ?? []).filter((m) => m.type === 'photo');
+        const primaryPhoto = photos.find((m) => m.is_primary) ?? photos[0] ?? null;
+        const primaryPhotoUrl = primaryPhoto ? getPublicUrlDetail(primaryPhoto.storage_path) : null;
+        const photoUrls = photos.map((m) => getPublicUrlDetail(m.storage_path)).filter(Boolean);
+
         injectJsonLd(property, photoUrls, displayTitle);
+
+        // Dynamic social share meta tags
+        updateSocialMeta(property, displayTitle, primaryPhotoUrl);
     }
 
     document.addEventListener('DOMContentLoaded', init);

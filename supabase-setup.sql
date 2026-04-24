@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS properties (
     reference_nr    TEXT UNIQUE,
     featured        BOOLEAN NOT NULL DEFAULT false,
     sort_order      INTEGER NOT NULL DEFAULT 0,
+    virtual_tour_url TEXT,
 
     -- Specs
     bedrooms        SMALLINT,

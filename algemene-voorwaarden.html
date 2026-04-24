@@ -65,13 +65,10 @@
 </header>
 
 <!-- PAGE HEADER -->
-<section class="page-header">
-    <div class="page-header-bg" style="background-image:url('assets/interieur-3.jpg')"></div>
-    <div class="page-header-overlay"></div>
+<section class="page-header page-header-solid-dark">
     <div class="page-header-content">
         <span class="label-tag">Juridisch</span>
         <h1>Algemene Voorwaarden</h1>
-        <p>De voorwaarden die van toepassing zijn op onze dienstverlening</p>
         <nav class="breadcrumb"><a href="index.html">Home</a> <i class="fas fa-chevron-right"></i> <span>Algemene Voorwaarden</span></nav>
     </div>
 </section>
@@ -195,7 +192,7 @@
         <p>Toezichthoudende autoriteit: Beroepsinstituut van Vastgoedmakelaars, Luxemburgstraat 16B, 1000 Brussel. Vastgoed-bemiddelaar BIV 517066. BTW BE0789.665.914. BA en borgstelling via NV AXA Belgium.</p>
         <p class="footer-legal-links"><a href="privacybeleid.html">Privacybeleid</a> &middot; <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a></p>
     </div>
-    <div class="footer-bottom">&copy; 2026 <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
+    <div class="footer-bottom">&copy; <span class="copyright-year">2026</span> <span>VH Vastgoed</span> — Van Hulle Vastgoed. Alle rechten voorbehouden. &middot; Gemaakt door <a href="https://suave.gg" target="_blank" rel="noopener">suave</a></div>
 </footer>
 
 <script>
@@ -203,6 +200,7 @@ const __navMenu=document.getElementById('navMenu');const __ham=document.getEleme
 window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80));
 const __isMobile=()=>window.innerWidth<=768;document.querySelectorAll('.nav-dropdown').forEach(dd=>{const lk=dd.querySelector('a');dd.addEventListener('mouseenter',()=>{if(!__isMobile())dd.classList.add('active');});dd.addEventListener('mouseleave',()=>{if(!__isMobile())dd.classList.remove('active');});lk.addEventListener('click',e=>{if(__isMobile()){e.preventDefault();document.querySelectorAll('.nav-dropdown.active').forEach(o=>{if(o!==dd)o.classList.remove('active');});dd.classList.toggle('active');}});});
 </script>
+<script>document.querySelectorAll('.copyright-year').forEach(el=>el.textContent=new Date().getFullYear());</script>
 <script src="cookie-banner.js"></script>
 </body>
 </html>

@@ -1500,3 +1500,23 @@ img {
         height: 28px;
     }
 }
+
+/* ── Grond notice ──────────────────────────────────────────── */
+.grond-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    background: #fff8e7;
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    font-size: 0.88rem;
+    color: var(--gray-700);
+    line-height: 1.5;
+}
+.grond-notice i {
+    color: var(--gold);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}

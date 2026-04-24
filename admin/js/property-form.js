@@ -18,6 +18,7 @@
         'title', 'address', 'postal_code', 'city', 'reference_nr',
         'description', 'orientation', 'epc_unique_code',
         'g_score', 'p_score', 'destination', 'judgments', 'servitude',
+        'virtual_tour_url',
     ];
 
     const SELECT_FIELDS = [
@@ -318,6 +319,7 @@
 
     async function uploadPhotos(files, propertyId) {
         const startOrder = existingPhotos.length;
+        const failed = [];
 
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
@@ -334,6 +336,7 @@
 
             if (uploadError) {
                 console.error('Photo upload error:', uploadError);
+                failed.push(file.name);
                 continue;
             }
 
@@ -352,13 +355,20 @@
 
             if (insertError) {
                 console.error('Photo media insert error:', insertError);
+                failed.push(file.name);
             }
+        }
+
+        if (failed.length > 0) {
+            showToast(`${failed.length} foto('s) konden niet geüpload worden.`, 'error');
         }
     }
 
     /* ── Document upload ───────────────────────────────────── */
 
     async function uploadDocuments(docEntries, propertyId) {
+        const failed = [];
+
         for (const entry of docEntries) {
             const file = entry.file;
             const label = (entry.label === 'Andere' && entry.customLabel) ? entry.customLabel : entry.label;
@@ -375,6 +385,7 @@
 
             if (uploadError) {
                 console.error('Document upload error:', uploadError);
+                failed.push(file.name);
                 continue;
             }
 
@@ -393,7 +404,12 @@
 
             if (insertError) {
                 console.error('Document media insert error:', insertError);
+                failed.push(file.name);
             }
+        }
+
+        if (failed.length > 0) {
+            showToast(`${failed.length} document(en) konden niet geüpload worden.`, 'error');
         }
     }
 
@@ -865,6 +881,23 @@
         }
     }
 
+    /* ── Type-aware field visibility (hides building fields for Grond) ───── */
+
+    function updateFormForType() {
+        const typeEl = document.getElementById('type');
+        if (!typeEl) return;
+        const isGrond = typeEl.value === 'grond';
+
+        // Toggle all elements marked data-hide-for-grond
+        document.querySelectorAll('[data-hide-for-grond]').forEach((el) => {
+            el.style.display = isGrond ? 'none' : '';
+        });
+
+        // Toggle the info notice
+        const notice = document.getElementById('grondNotice');
+        if (notice) notice.style.display = isGrond ? 'flex' : 'none';
+    }
+
     /* ── Property map preview ─────────────────────────────────── */
 
     function previewPropertyMap() {
@@ -905,6 +938,10 @@
         initDocUpload();
         initTerraceToggle();
 
+        // Bind type change → hide irrelevant fields for Grond
+        const typeEl = document.getElementById('type');
+        if (typeEl) typeEl.addEventListener('change', updateFormForType);
+
         // Load agents dropdown
         await loadAgentsDropdown();
 
@@ -917,6 +954,9 @@
             currentPropertyId = editId;
             await loadProperty(editId);
         }
+
+        // Apply Grond-specific visibility (covers both new and edit modes)
+        updateFormForType();
 
         // Form submit
         document.getElementById('propertyForm').addEventListener('submit', async (e) => {
