@@ -383,7 +383,7 @@ footer { background:var(--darker); color:rgba(255,255,255,0.5); }
 /* Gallery */
 .detail-gallery { max-width:1200px; margin:0 auto; padding:0 5%; }
 .gallery-main { position:relative; width:100%; height:500px; overflow:hidden; background:var(--dark); cursor:pointer; }
-.gallery-main img { width:100%; height:100%; object-fit:cover; display:block; }
+.gallery-main img { width:100%; height:100%; object-fit:contain; display:block; }
 .gallery-arrows { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:0 16px; pointer-events:none; }
 .gallery-arrows button { width:48px; height:48px; background:rgba(26,26,26,0.6); border:none; color:var(--white); font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; pointer-events:all; transition:background 0.3s; }
 .gallery-arrows button:hover { background:var(--gold); }
