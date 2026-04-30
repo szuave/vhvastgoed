@@ -618,6 +618,52 @@
                 }
             });
         });
+
+        // Drag-and-drop reordering via SortableJS
+        if (typeof Sortable !== 'undefined' && existingPhotos.length > 1) {
+            if (grid._sortable) grid._sortable.destroy();
+            grid._sortable = Sortable.create(grid, {
+                animation: 200,
+                draggable: '.photo-card[data-media-id]',  // pending photos locked in place
+                filter: 'input, button, i',
+                preventOnFilter: false,
+                ghostClass: 'photo-card-ghost',
+                chosenClass: 'photo-card-chosen',
+                dragClass: 'photo-card-drag',
+                onEnd: async (evt) => {
+                    if (evt.oldIndex === evt.newIndex) return;
+
+                    const cards = Array.from(grid.querySelectorAll('.photo-card[data-media-id]'));
+                    const idsInOrder = cards.map((c) => c.dataset.mediaId);
+
+                    try {
+                        // Parallel DB updates — much faster than sequential
+                        const results = await Promise.all(
+                            idsInOrder.map((id, i) =>
+                                db.from('property_media').update({ sort_order: i }).eq('id', id)
+                            )
+                        );
+                        const failed = results.find((r) => r.error);
+                        if (failed) throw failed.error;
+
+                        // Sync local state to new order
+                        existingPhotos.sort(
+                            (a, b) => idsInOrder.indexOf(String(a.id)) - idsInOrder.indexOf(String(b.id))
+                        );
+                        existingPhotos.forEach((p, i) => (p.sort_order = i));
+
+                        // Re-render to refresh arrow disabled states
+                        renderPhotoGrid();
+                        showToast('Volgorde opgeslagen', 'success');
+                    } catch (e) {
+                        console.error('Reorder failed:', e);
+                        showToast('Volgorde opslaan mislukt.', 'error');
+                        // Re-render to revert visual state to actual data
+                        renderPhotoGrid();
+                    }
+                },
+            });
+        }
     }
 
     function renderDocumentsList() {

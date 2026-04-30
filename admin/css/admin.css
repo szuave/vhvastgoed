@@ -1501,6 +1501,25 @@ img {
     }
 }
 
+/* ── Photo grid drag-and-drop ──────────────────────────────── */
+.photo-card { cursor: grab; }
+.photo-card:active { cursor: grabbing; }
+.photo-card input,
+.photo-card button { cursor: pointer; }
+.photo-card input { cursor: text; }
+.photo-card-ghost {
+    opacity: 0.4;
+    background: #fff8e7;
+    border: 2px dashed var(--gold);
+}
+.photo-card-chosen {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.photo-card-drag {
+    transform: rotate(2deg);
+    opacity: 0.9;
+}
+
 /* ── Grond notice ──────────────────────────────────────────── */
 .grond-notice {
     display: flex;
