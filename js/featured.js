@@ -22,7 +22,7 @@ async function loadFeaturedProperties() {
                 )
             `)
             .eq('featured', true)
-            .in('status', ['te koop', 'te huur'])
+            .in('status', ['te koop', 'te huur', 'in optie te koop', 'in optie te huur'])
             .order('sort_order', { ascending: true })
             .limit(4);
 

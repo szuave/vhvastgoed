@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS properties (
     city            TEXT,
     price           NUMERIC,
     status          TEXT NOT NULL CHECK (status IN (
-                        'te koop','te huur','verkocht','verhuurd'
+                        'te koop','te huur','in optie te koop','in optie te huur','verkocht','verhuurd'
                     )),
     description     TEXT,
     reference_nr    TEXT UNIQUE,

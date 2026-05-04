@@ -20,6 +20,14 @@ function getPublicUrl(storagePath) {
  * Sale  → "€ 349.000"
  * Rent  → "€ 850 /maand"
  */
+function inOptieStatusFor(status) {
+    return status === 'te huur' ? 'in optie te huur' : 'in optie te koop';
+}
+
+function isInOptie(status) {
+    return status === 'in optie te koop' || status === 'in optie te huur';
+}
+
 function formatPrice(price, status) {
     if (price == null) return 'Prijs op aanvraag';
 
@@ -28,7 +36,7 @@ function formatPrice(price, status) {
         maximumFractionDigits: 0,
     }).format(price);
 
-    if (status === 'te huur' || status === 'verhuurd') {
+    if (status === 'te huur' || status === 'verhuurd' || status === 'in optie te huur') {
         return `€ ${formatted} /maand`;
     }
     return `€ ${formatted}`;
@@ -56,7 +64,7 @@ async function loadProperties(status, filters = {}) {
                     type
                 )
             `)
-            .eq('status', status)
+            .in('status', [status, inOptieStatusFor(status)])
             .order('sort_order', { ascending: true })
             .order('created_at', { ascending: false });
 
@@ -102,12 +110,14 @@ function escapeHtml(str) {
 function renderPropertyCard(property) {
     const imageUrl = property.primaryPhoto ?? 'assets/logo_transparent.png';
     const isSold = property.status === 'verkocht' || property.status === 'verhuurd';
-    const isRental = property.status === 'te huur';
-    const badgeClass = isSold ? 'badge sold' : isRental ? 'badge huur' : 'badge';
+    const isOptie = isInOptie(property.status);
+    const isRental = property.status === 'te huur' || property.status === 'in optie te huur';
+    const badgeClass = isOptie ? 'badge optie' : isSold ? 'badge sold' : isRental ? 'badge huur' : 'badge';
+    const badgeLabel = isOptie ? 'In Optie' : property.status;
 
     const title = escapeHtml(property.title);
     const city = escapeHtml(property.city);
-    const status = escapeHtml(property.status);
+    const status = escapeHtml(badgeLabel);
     const safeId = escapeHtml(property.id);
     const safeImg = escapeHtml(imageUrl);
 
@@ -143,7 +153,7 @@ async function loadCities(status) {
         const { data, error } = await db
             .from('properties')
             .select('city')
-            .eq('status', status)
+            .in('status', [status, inOptieStatusFor(status)])
             .not('city', 'is', null)
             .order('city', { ascending: true });
 

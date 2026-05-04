@@ -31,13 +31,19 @@
                 .select('*', { count: 'exact', head: true })
                 .in('status', ['verkocht', 'verhuurd']);
 
-            if (e1 || e2 || e3 || e4) {
-                console.error('Stats error:', e1 || e2 || e3 || e4);
+            const { count: inOptie, error: e5 } = await db
+                .from('properties')
+                .select('*', { count: 'exact', head: true })
+                .in('status', ['in optie te koop', 'in optie te huur']);
+
+            if (e1 || e2 || e3 || e4 || e5) {
+                console.error('Stats error:', e1 || e2 || e3 || e4 || e5);
             }
 
             document.getElementById('statTotal').textContent = total ?? 0;
             document.getElementById('statTeKoop').textContent = teKoop ?? 0;
             document.getElementById('statTeHuur').textContent = teHuur ?? 0;
+            document.getElementById('statInOptie').textContent = inOptie ?? 0;
             document.getElementById('statVerkocht').textContent = (verkocht ?? 0);
         } catch (err) {
             console.error('Failed to load stats:', err);

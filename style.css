@@ -111,6 +111,7 @@ body { font-family:'Montserrat',sans-serif; color:var(--dark); background:var(--
 .property-card:hover .property-img img { transform:scale(1.06); }
 .badge { position:absolute; top:12px; left:12px; background:var(--gold); color:var(--white); font-size:0.68rem; font-weight:700; padding:5px 12px; text-transform:uppercase; letter-spacing:0.5px; }
 .badge.sold { background:var(--dark); }
+.badge.optie { background:#c9302c; }
 .property-info { padding:1.2rem 1.4rem 1.4rem; }
 .property-info h4 { font-size:0.95rem; font-weight:600; margin-bottom:0.3rem; color:var(--dark); }
 .property-price { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:600; color:var(--gold); margin-bottom:0.6rem; }
@@ -395,6 +396,7 @@ footer { background:var(--darker); color:rgba(255,255,255,0.5); }
 .detail-header { max-width:1200px; margin:0 auto; padding:30px 5% 20px; display:flex; justify-content:space-between; align-items:flex-start; gap:30px; flex-wrap:wrap; }
 .detail-header-left { flex:1; }
 .detail-type { display:inline-block; font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+.detail-optie-tag { display:inline-block; font-size:0.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#fff; background:#c9302c; padding:3px 8px; border-radius:3px; margin-left:8px; vertical-align:middle; }
 .detail-address { font-family:'Montserrat',sans-serif; font-size:1.4rem; font-weight:700; color:var(--dark); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
 .detail-price { font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:700; color:var(--gold); white-space:nowrap; }
 .detail-key-specs { display:flex; gap:20px; flex-wrap:wrap; }

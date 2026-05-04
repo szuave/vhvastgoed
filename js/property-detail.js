@@ -24,7 +24,7 @@
             minimumFractionDigits: 0,
             maximumFractionDigits: 0,
         }).format(price);
-        if (status === 'te huur' || status === 'verhuurd') {
+        if (status === 'te huur' || status === 'verhuurd' || status === 'in optie te huur') {
             return `\u20AC ${formatted} /maand`;
         }
         return `\u20AC ${formatted}`;
@@ -250,6 +250,12 @@
                 (property.city ?? '');
         }
         if (priceEl) priceEl.textContent = formatPriceDetail(property.price, property.status);
+
+        const optieTag = document.getElementById('detail-optie-tag');
+        if (optieTag) {
+            const isOptie = property.status === 'in optie te koop' || property.status === 'in optie te huur';
+            optieTag.style.display = isOptie ? 'inline-block' : 'none';
+        }
 
         if (specsEl) {
             const specs = [];
@@ -515,7 +521,7 @@
         // Back link
         const backLink = document.getElementById('back-link');
         if (backLink) {
-            const isRent = property.status === 'te huur' || property.status === 'verhuurd';
+            const isRent = property.status === 'te huur' || property.status === 'verhuurd' || property.status === 'in optie te huur';
             const a = backLink.querySelector('a');
             if (a) a.href = isRent ? 'te-huur.html' : 'te-koop.html';
         }
@@ -544,7 +550,7 @@
         };
 
         if (property.price != null) {
-            const isRent = property.status === 'te huur' || property.status === 'verhuurd';
+            const isRent = property.status === 'te huur' || property.status === 'verhuurd' || property.status === 'in optie te huur';
             schema.offers = {
                 '@type': 'Offer',
                 price: property.price,

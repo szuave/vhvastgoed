@@ -28,7 +28,9 @@
             if (status === 'featured') {
                 query = query.eq('featured', true);
             } else {
-                query = query.eq('status', status);
+                // Include the matching "in optie" variant for each tab
+                const optieStatus = status === 'te huur' ? 'in optie te huur' : 'in optie te koop';
+                query = query.in('status', [status, optieStatus]);
             }
 
             const { data, error } = await query;
