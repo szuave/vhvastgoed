@@ -112,6 +112,14 @@ body { font-family:'Montserrat',sans-serif; color:var(--dark); background:var(--
 .badge { position:absolute; top:12px; left:12px; background:var(--gold); color:var(--white); font-size:0.68rem; font-weight:700; padding:5px 12px; text-transform:uppercase; letter-spacing:0.5px; }
 .badge.sold { background:var(--dark); }
 .badge.optie { background:#c9302c; }
+
+/* Sold / rented properties: non-clickable, dimmed appearance */
+.property-card.sold-card { cursor:default; filter:grayscale(0.6); opacity:0.75; }
+.property-card.sold-card:hover { transform:none; box-shadow:0 2px 12px rgba(0,0,0,0.04); }
+.property-card.sold-card:hover .property-img img { transform:none; }
+.property-card.sold-card .property-img img { transition:none; }
+.property-card.sold-card .property-info h4 { color:var(--gray-500, #777); }
+.property-card.sold-card .property-info { padding:1rem 1.4rem 1.2rem; }
 .property-info { padding:1.2rem 1.4rem 1.4rem; }
 .property-info h4 { font-size:0.95rem; font-weight:600; margin-bottom:0.3rem; color:var(--dark); }
 .property-price { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:600; color:var(--gold); margin-bottom:0.6rem; }

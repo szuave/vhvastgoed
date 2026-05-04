@@ -24,8 +24,16 @@ function inOptieStatusFor(status) {
     return status === 'te huur' ? 'in optie te huur' : 'in optie te koop';
 }
 
+function soldStatusFor(status) {
+    return status === 'te huur' ? 'verhuurd' : 'verkocht';
+}
+
 function isInOptie(status) {
     return status === 'in optie te koop' || status === 'in optie te huur';
+}
+
+function isSold(status) {
+    return status === 'verkocht' || status === 'verhuurd';
 }
 
 function formatPrice(price, status) {
@@ -64,7 +72,7 @@ async function loadProperties(status, filters = {}) {
                     type
                 )
             `)
-            .in('status', [status, inOptieStatusFor(status)])
+            .in('status', [status, inOptieStatusFor(status), soldStatusFor(status)])
             .order('sort_order', { ascending: true })
             .order('created_at', { ascending: false });
 
@@ -79,13 +87,20 @@ async function loadProperties(status, filters = {}) {
         if (error) throw error;
 
         // Pick primary photo client-side: prefer is_primary=true, fall back to first photo
-        return (data ?? []).map((property) => {
+        const enriched = (data ?? []).map((property) => {
             const photos = (property.property_media ?? []).filter((m) => m.type === 'photo');
             const primary = photos.find((m) => m.is_primary) ?? photos[0] ?? null;
             return {
                 ...property,
                 primaryPhoto: primary ? getPublicUrl(primary.storage_path) : null,
             };
+        });
+
+        // Sort sold/rented properties to the end so active listings appear first
+        return enriched.sort((a, b) => {
+            const aSold = isSold(a.status) ? 1 : 0;
+            const bSold = isSold(b.status) ? 1 : 0;
+            return aSold - bSold;
         });
     } catch (err) {
         console.error('loadProperties error:', err);
@@ -109,10 +124,10 @@ function escapeHtml(str) {
 
 function renderPropertyCard(property) {
     const imageUrl = property.primaryPhoto ?? 'assets/logo_transparent.png';
-    const isSold = property.status === 'verkocht' || property.status === 'verhuurd';
+    const sold = isSold(property.status);
     const isOptie = isInOptie(property.status);
     const isRental = property.status === 'te huur' || property.status === 'in optie te huur';
-    const badgeClass = isOptie ? 'badge optie' : isSold ? 'badge sold' : isRental ? 'badge huur' : 'badge';
+    const badgeClass = isOptie ? 'badge optie' : sold ? 'badge sold' : isRental ? 'badge huur' : 'badge';
     const badgeLabel = isOptie ? 'In Optie' : property.status;
 
     const title = escapeHtml(property.title);
@@ -120,6 +135,21 @@ function renderPropertyCard(property) {
     const status = escapeHtml(badgeLabel);
     const safeId = escapeHtml(property.id);
     const safeImg = escapeHtml(imageUrl);
+
+    // Sold/rented properties: show as non-clickable, dimmed, photo-only card
+    if (sold) {
+        return `
+            <div class="property-card sold-card">
+                <div class="property-img">
+                    <img src="${safeImg}" alt="${title}" loading="lazy">
+                    <span class="${badgeClass}">${status}</span>
+                </div>
+                <div class="property-info">
+                    <h4>${title}</h4>
+                    <p class="property-location"><i class="fas fa-map-marker-alt"></i> ${city}</p>
+                </div>
+            </div>`;
+    }
 
     const specs = [];
     if (property.bedrooms != null)   specs.push(`<span>${Number(property.bedrooms)} slpk</span>`);
