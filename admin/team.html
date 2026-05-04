@@ -70,6 +70,22 @@
         <div class="modal-card" style="max-width:560px;">
             <h2 class="modal-title" id="modalTitle">Nieuwe makelaar</h2>
             <form id="agentForm" novalidate>
+                <div class="form-row" id="agentPhotoRow" style="display:none;">
+                    <div class="form-group full">
+                        <label>Profielfoto</label>
+                        <div class="agent-photo-edit">
+                            <div class="agent-photo-preview" id="agentPhotoPreview">
+                                <img id="agentPhotoImg" src="" alt="" style="display:none;">
+                                <i class="fas fa-user-tie" id="agentPhotoPlaceholder"></i>
+                            </div>
+                            <div class="agent-photo-actions">
+                                <button type="button" class="btn btn-sm btn-secondary" id="agentPhotoUploadBtn"><i class="fas fa-upload"></i> Foto uploaden</button>
+                                <button type="button" class="btn btn-sm btn-secondary" id="agentPhotoRemoveBtn" style="display:none;"><i class="fas fa-trash"></i> Verwijderen</button>
+                                <input type="file" id="agentPhotoInput" accept="image/*" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="agent_first_name">Voornaam *</label>

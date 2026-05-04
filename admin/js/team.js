@@ -112,6 +112,7 @@
         document.getElementById('agentForm').reset();
         document.getElementById('agent_title').value = 'Vastgoedmakelaar';
         document.getElementById('agent_is_active').checked = true;
+        document.getElementById('agentPhotoRow').style.display = 'none';
         document.getElementById('agentModal').style.display = '';
     }
 
@@ -129,7 +130,101 @@
         document.getElementById('agent_biv').value = agent.biv_number || '';
         document.getElementById('agent_bio').value = agent.bio || '';
         document.getElementById('agent_is_active').checked = agent.is_active;
+        document.getElementById('agentPhotoRow').style.display = '';
+        loadAgentPhotoPreview(agent.photo_path);
         document.getElementById('agentModal').style.display = '';
+    }
+
+    function loadAgentPhotoPreview(photoPath) {
+        const img = document.getElementById('agentPhotoImg');
+        const placeholder = document.getElementById('agentPhotoPlaceholder');
+        const removeBtn = document.getElementById('agentPhotoRemoveBtn');
+        if (!img) return;
+
+        if (photoPath) {
+            const { data } = db.storage.from('agent-photos').getPublicUrl(photoPath);
+            const url = data?.publicUrl;
+            if (url) {
+                img.src = url;
+                img.style.display = '';
+                placeholder.style.display = 'none';
+                removeBtn.style.display = '';
+                return;
+            }
+        }
+        img.style.display = 'none';
+        placeholder.style.display = '';
+        removeBtn.style.display = 'none';
+    }
+
+    async function uploadAgentPhoto(file) {
+        if (!editingAgentId || !file) return;
+        const agent = agents.find(a => String(a.id) === String(editingAgentId));
+        if (!agent) return;
+
+        const timestamp = Date.now();
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const storagePath = `${agent.id}/${timestamp}-${safeName}`;
+
+        try {
+            if (agent.photo_path) {
+                await db.storage.from('agent-photos').remove([agent.photo_path]);
+            }
+
+            const { error: uploadError } = await db.storage
+                .from('agent-photos')
+                .upload(storagePath, file, { contentType: file.type, upsert: false });
+
+            if (uploadError) {
+                console.error('Photo upload error:', uploadError);
+                showToast('Fout bij het uploaden van de foto.', 'error');
+                return;
+            }
+
+            const { error: updateError } = await db
+                .from('agents')
+                .update({ photo_path: storagePath })
+                .eq('id', agent.id);
+
+            if (updateError) {
+                console.error('Update photo_path error:', updateError);
+                showToast('Foto geupload maar opslaan mislukt.', 'error');
+                return;
+            }
+
+            agent.photo_path = storagePath;
+            loadAgentPhotoPreview(storagePath);
+            showToast('Foto bijgewerkt.', 'success');
+        } catch (err) {
+            console.error('Upload photo failed:', err);
+            showToast('Er is een onverwachte fout opgetreden.', 'error');
+        }
+    }
+
+    async function removeAgentPhoto() {
+        if (!editingAgentId) return;
+        const agent = agents.find(a => String(a.id) === String(editingAgentId));
+        if (!agent || !agent.photo_path) return;
+
+        try {
+            await db.storage.from('agent-photos').remove([agent.photo_path]);
+            const { error } = await db
+                .from('agents')
+                .update({ photo_path: null })
+                .eq('id', agent.id);
+
+            if (error) {
+                console.error('Remove photo error:', error);
+                showToast('Fout bij het verwijderen van de foto.', 'error');
+                return;
+            }
+
+            agent.photo_path = null;
+            loadAgentPhotoPreview(null);
+            showToast('Foto verwijderd.', 'success');
+        } catch (err) {
+            console.error('Remove photo failed:', err);
+        }
     }
 
     function closeModal() {
@@ -312,5 +407,17 @@
         // Delete modal events
         document.getElementById('cancelDeleteAgent').addEventListener('click', closeDeleteModal);
         document.getElementById('confirmDeleteAgent').addEventListener('click', deleteAgent);
+
+        // Photo upload events
+        const photoInput = document.getElementById('agentPhotoInput');
+        document.getElementById('agentPhotoUploadBtn').addEventListener('click', () => photoInput.click());
+        photoInput.addEventListener('change', () => {
+            const file = photoInput.files[0];
+            if (file) uploadAgentPhoto(file);
+            photoInput.value = '';
+        });
+        document.getElementById('agentPhotoRemoveBtn').addEventListener('click', () => {
+            if (confirm('Foto verwijderen?')) removeAgentPhoto();
+        });
     });
 })();
