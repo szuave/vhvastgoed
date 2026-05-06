@@ -12,10 +12,8 @@
 
     function getPublicUrlDetail(storagePath) {
         if (!storagePath) return null;
-        const { data } = db.storage
-            .from('property-media')
-            .getPublicUrl(storagePath);
-        return data?.publicUrl ?? null;
+        // Proxy through Netlify CDN to massively reduce Supabase egress.
+        return `/storage-img/property-media/${storagePath}`;
     }
 
     function formatPriceDetail(price, status) {
@@ -467,10 +465,8 @@
                                   : digits ? '+' + digits : '';
 
                     if (agent.photo_path) {
-                        const { data: urlData } = db.storage
-                            .from('agent-photos')
-                            .getPublicUrl(agent.photo_path);
-                        agentPhotoUrl = urlData?.publicUrl || null;
+                        // Proxy through Netlify CDN
+                        agentPhotoUrl = `/storage-img/agent-photos/${agent.photo_path}`;
                     }
                 }
             } catch (err) {

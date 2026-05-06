@@ -18,3 +18,18 @@
 [build.processing.images]
   compress = false
 
+# Proxy Supabase Storage through Netlify's CDN
+# Reduces Supabase egress dramatically — Supabase serves each image once,
+# Netlify caches it at the edge for all subsequent requests.
+[[redirects]]
+  from = "/storage-img/*"
+  to = "https://vziiwmfrqzdosnlnenbq.supabase.co/storage/v1/object/public/:splat"
+  status = 200
+  force = true
+
+# Cache proxied images aggressively at the browser too
+[[headers]]
+  for = "/storage-img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, s-maxage=31536000, immutable"
+

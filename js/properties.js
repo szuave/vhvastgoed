@@ -9,10 +9,8 @@
  */
 function getPublicUrl(storagePath) {
     if (!storagePath) return null;
-    const { data } = db.storage
-        .from('property-media')
-        .getPublicUrl(storagePath);
-    return data?.publicUrl ?? null;
+    // Proxy through Netlify CDN to massively reduce Supabase egress.
+    return `/storage-img/property-media/${storagePath}`;
 }
 
 /**
