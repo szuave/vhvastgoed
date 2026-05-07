@@ -18,6 +18,37 @@
 [build.processing.images]
   compress = false
 
+# Safety-net redirects for old admin paths cached in browsers
+[[redirects]]
+  from = "/dashboard.html"
+  to = "/admin/dashboard.html"
+  status = 301
+
+[[redirects]]
+  from = "/property-form.html"
+  to = "/admin/property-form.html"
+  status = 301
+
+[[redirects]]
+  from = "/profile.html"
+  to = "/admin/profile.html"
+  status = 301
+
+[[redirects]]
+  from = "/team.html"
+  to = "/admin/team.html"
+  status = 301
+
+[[redirects]]
+  from = "/sort-order.html"
+  to = "/admin/sort-order.html"
+  status = 301
+
+[[redirects]]
+  from = "/settings.html"
+  to = "/admin/settings.html"
+  status = 301
+
 # Proxy Supabase Storage through Netlify's CDN
 # Reduces Supabase egress dramatically — Supabase serves each image once,
 # Netlify caches it at the edge for all subsequent requests.
